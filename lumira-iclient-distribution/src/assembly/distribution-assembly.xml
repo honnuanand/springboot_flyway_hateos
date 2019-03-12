@@ -1,0 +1,50 @@
+<assembly xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/2.0.0"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/2.0.0
+          http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+
+    <!--
+     The assembly descriptor file for the LumiraDx Intgeration Client Management Service distribution.
+     -->
+    <id>${jenkins.build.id}</id>
+    <formats>
+        <!-- generate a ZIP distribution archive -->
+        <format>zip</format>
+    </formats>
+
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <baseDirectory>/</baseDirectory>
+
+    <fileSets>
+        <!-- copy the executable JAR files into the /bin sub-directory of the distribution archive -->
+        <fileSet>
+            <directory>${project.parent.basedir}/lumira-iclient-webapp/target</directory>
+            <outputDirectory>${project.artifactId}/bin/</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+
+        <!-- add the /config sub-directory with an externalized properties file to the distribution archive -->
+        <!-- note: must copy from /target - after build's resource filtering resolves ${} property placeholders -->
+        <fileSet>
+            <directory>${project.parent.basedir}/lumira-iclient-webapp/target/classes/</directory>
+            <outputDirectory>${project.artifactId}/config/</outputDirectory>
+            <includes>
+                <include>application*.properties</include>
+            </includes>
+        </fileSet>
+
+
+        <!-- copy the contents of src/assembly/etc into the root of the distribution (README and scripts) -->
+        <fileSet>
+            <directory>src/assembly/etc</directory>
+            <outputDirectory>${project.artifactId}/</outputDirectory>
+            <filtered>true</filtered>
+            <includes>
+                <include>*.*</include>
+            </includes>
+        </fileSet>
+
+    </fileSets>
+</assembly>

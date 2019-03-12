@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <artifactId>lumira-iclient-distribution</artifactId>
+    <packaging>jar</packaging>
+    <parent>
+        <artifactId>lumira-integration-client-manager</artifactId>
+        <groupId>com.lumiradx.iclient</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <build>
+        <plugins>
+            <!-- Maven Assembly plugin configuration: assembles distribution package for convenient deployments w/externalized
+              config properties and startup scripts -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven-assembly-plugin.version}</version>
+                <configuration>
+                    <!-- the name of the resulting distribution file; overrides default - module name + version it will be suffixed
+                      by "-distribution", which is the ID defined in the descriptor XML -->
+                    <descriptors>
+                        <!-- assembly descriptor file location in sources -->
+                        <descriptor>src/assembly/distribution-assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>distribution-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase>         <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
